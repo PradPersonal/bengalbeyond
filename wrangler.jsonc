@@ -1,0 +1,10 @@
+// Cloudflare Workers settings. The site is plain static files built into ./dist.
+{
+  "name": "bengalbeyond",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    // Show src/pages/404.astro instead of a blank page for unknown URLs.
+    "not_found_handling": "404-page"
+  }
+}
