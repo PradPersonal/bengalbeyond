@@ -1,0 +1,29 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import TourImage from './TourImage.astro';
+import { formatPrice } from '../config';
+
+interface Props {
+  tour: CollectionEntry<'tours'>;
+}
+const { tour } = Astro.props;
+const t = tour.data;
+---
+<a
+  href={`/tours/${tour.id}`}
+  class="group flex flex-col overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+  data-category={t.category}
+>
+  <div class="relative">
+    <TourImage image={t.image} alt={t.title} label={t.location} category={t.category} class="h-48 w-full" />
+    <span class="absolute top-3 left-3 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-stone-700">{t.category}</span>
+  </div>
+  <div class="flex flex-1 flex-col p-5">
+    <h3 class="font-display text-xl font-semibold group-hover:text-brand-600">{t.title}</h3>
+    <p class="mt-2 line-clamp-3 flex-1 text-sm text-stone-600">{t.summary}</p>
+    <div class="mt-4 flex items-center justify-between text-sm">
+      <span class="text-stone-500">{t.duration}</span>
+      <span class="font-semibold text-brand-700">from {formatPrice(t.price)}</span>
+    </div>
+  </div>
+</a>

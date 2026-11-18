@@ -1,0 +1,27 @@
+---
+/**
+ * Shows the tour photo if one is set; otherwise a coloured placeholder.
+ * Add photos to /public/images and set `image: /images/name.jpg` in the tour file.
+ */
+interface Props {
+  image?: string;
+  alt: string;
+  label: string;
+  category: string;
+  class?: string;
+}
+const { image, alt, label, category, class: className = '' } = Astro.props;
+const gradients: Record<string, string> = {
+  'City Tour': 'from-amber-500 to-rose-600',
+  'Day Trip': 'from-emerald-500 to-teal-700',
+  'Weekend Trip': 'from-sky-500 to-indigo-700',
+};
+const gradient = gradients[category] ?? 'from-stone-400 to-stone-600';
+---
+{image ? (
+  <img src={image} alt={alt} loading="lazy" class={`object-cover ${className}`} />
+) : (
+  <div class={`flex items-end bg-linear-to-br p-4 ${gradient} ${className}`} role="img" aria-label={alt}>
+    <span class="font-display text-lg font-semibold text-white/90 drop-shadow">{label}</span>
+  </div>
+)}

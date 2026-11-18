@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+/* Brand colours — change these to restyle the whole site. */
+@theme {
+  --color-brand-50: #fffbeb;
+  --color-brand-100: #fef3c7;
+  --color-brand-500: #d97706;
+  --color-brand-600: #b45309;
+  --color-brand-700: #92400e;
+  --color-ink: #1c1917;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Playfair Display", ui-serif, Georgia, serif;
+}
+
+html { scroll-behavior: smooth; }
+body { @apply bg-stone-50 text-ink antialiased; }
+
+/* Styles for rendered Markdown inside tour pages */
+.prose-tour h2 { @apply mt-8 mb-3 font-display text-2xl font-semibold; }
+.prose-tour h3 { @apply mt-6 mb-2 text-lg font-semibold; }
+.prose-tour p { @apply mb-4 leading-relaxed text-stone-700; }
+.prose-tour ul { @apply mb-4 list-disc space-y-1 pl-6 text-stone-700; }
+.prose-tour ol { @apply mb-4 list-decimal space-y-1 pl-6 text-stone-700; }
+.prose-tour strong { @apply text-ink; }

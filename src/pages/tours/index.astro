@@ -1,0 +1,46 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import TourCard from '../../components/TourCard.astro';
+
+const tours = (await getCollection('tours')).sort((a, b) => a.data.order - b.data.order);
+const categories = ['All', ...new Set(tours.map((t) => t.data.category))];
+---
+<Base title="All Tours" description="Browse city tours, day trips and weekend trips from Kolkata.">
+  <section class="mx-auto max-w-6xl px-4 py-12">
+    <h1 class="font-display text-4xl font-bold">All tours</h1>
+    <p class="mt-2 text-stone-600">City walks, day trips and weekend getaways — all starting from Kolkata.</p>
+
+    <div class="mt-6 flex flex-wrap gap-2" id="filters">
+      {categories.map((c, i) => (
+        <button
+          type="button"
+          data-filter={c}
+          aria-pressed={i === 0 ? 'true' : 'false'}
+          class="rounded-full border border-stone-300 px-4 py-1.5 text-sm font-medium text-stone-700 transition hover:border-brand-500 aria-pressed:border-brand-600 aria-pressed:bg-brand-600 aria-pressed:text-white"
+        >
+          {c}
+        </button>
+      ))}
+    </div>
+
+    <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" id="tour-grid">
+      {tours.map((tour) => <TourCard tour={tour} />)}
+    </div>
+  </section>
+</Base>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('#filters button');
+  const cards = document.querySelectorAll<HTMLElement>('#tour-grid [data-category]');
+
+  buttons.forEach((btn) =>
+    btn.addEventListener('click', () => {
+      const filter = btn.dataset.filter;
+      buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+      cards.forEach((card) => {
+        card.hidden = filter !== 'All' && card.dataset.category !== filter;
+      });
+    }),
+  );
+</script>

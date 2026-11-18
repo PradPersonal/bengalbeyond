@@ -1,0 +1,85 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import TourCard from '../components/TourCard.astro';
+import { site, whatsappLink } from '../config';
+
+const tours = (await getCollection('tours')).sort((a, b) => a.data.order - b.data.order);
+const featured = tours.filter((t) => t.data.featured).slice(0, 3);
+
+const reasons = [
+  { title: 'Born & raised here', text: 'Stories, shortcuts and food stops you will not find in a guidebook.' },
+  { title: 'Small groups', text: 'Never a crowd — tours are personal and flexible.' },
+  { title: 'Book directly', text: 'No middlemen. Chat with us on WhatsApp and plan your day.' },
+  { title: 'Transparent pricing', text: 'What you see is what you pay. No hidden charges.' },
+];
+---
+<Base>
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-brand-700 text-white">
+    <img
+      src="/images/hero-kolkata.jpg"
+      alt="Kolkata at sunset with the Victoria Memorial and Howrah Bridge"
+      fetchpriority="high"
+      class="absolute inset-0 h-full w-full object-cover object-center"
+    />
+    <div class="absolute inset-0 bg-linear-to-r from-black/75 via-black/45 to-black/10" aria-hidden="true"></div>
+    <div class="relative mx-auto max-w-6xl px-4 py-24 md:py-36">
+      <p class="mb-3 text-sm font-semibold tracking-widest text-brand-100 uppercase drop-shadow">Kolkata &amp; beyond</p>
+      <h1 class="max-w-2xl font-display text-4xl leading-tight font-bold md:text-6xl">{site.tagline}</h1>
+      <p class="mt-5 max-w-xl text-lg text-white/85">
+        Heritage walks, food trails and day trips to Sundarbans, Shantiniketan, Bishnupur and more — guided by locals who love this city.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="/tours" class="rounded-lg bg-white px-6 py-3 font-semibold text-brand-700 shadow transition hover:bg-brand-50">Explore tours</a>
+        <a
+          href={whatsappLink('Hi! I would like help planning a tour in Kolkata.')}
+          target="_blank"
+          rel="noopener"
+          class="rounded-lg border border-white/60 px-6 py-3 font-semibold transition hover:bg-white/10"
+        >
+          Chat on WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured tours -->
+  <section class="mx-auto max-w-6xl px-4 py-16">
+    <div class="mb-8 flex items-end justify-between gap-4">
+      <div>
+        <h2 class="font-display text-3xl font-bold">Popular tours</h2>
+        <p class="mt-1 text-stone-600">Our guests' favourite ways to experience Kolkata.</p>
+      </div>
+      <a href="/tours" class="hidden font-semibold text-brand-600 hover:text-brand-700 sm:block">View all →</a>
+    </div>
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {featured.map((tour) => <TourCard tour={tour} />)}
+    </div>
+    <a href="/tours" class="mt-6 block text-center font-semibold text-brand-600 sm:hidden">View all tours →</a>
+  </section>
+
+  <!-- Why us -->
+  <section class="bg-brand-50">
+    <div class="mx-auto max-w-6xl px-4 py-16">
+      <h2 class="text-center font-display text-3xl font-bold">Why travel with a local?</h2>
+      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {reasons.map((r) => (
+          <div class="rounded-2xl bg-white p-6 shadow-sm">
+            <h3 class="font-semibold text-brand-700">{r.title}</h3>
+            <p class="mt-2 text-sm text-stone-600">{r.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to action -->
+  <section class="mx-auto max-w-6xl px-4 py-16 text-center">
+    <h2 class="font-display text-3xl font-bold">Want something custom?</h2>
+    <p class="mx-auto mt-3 max-w-xl text-stone-600">
+      Durga Puja pandal hopping, a photography walk, or a private family trip — tell us what you have in mind and we will plan it.
+    </p>
+    <a href="/contact" class="mt-6 inline-block rounded-lg bg-brand-600 px-6 py-3 font-semibold text-white transition hover:bg-brand-700">Plan my trip</a>
+  </section>
+</Base>

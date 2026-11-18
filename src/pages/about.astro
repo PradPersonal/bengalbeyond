@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../config';
+---
+<Base title="About Us" description={`About ${site.name} — local guides from Kolkata.`}>
+  <section class="mx-auto max-w-3xl px-4 py-12">
+    <h1 class="font-display text-4xl font-bold">About us</h1>
+    <!-- TODO: replace this with your own story — it is the most important page for building trust. -->
+    <div class="prose-tour mt-6">
+      <p>
+        Namaskar! We are a small team of Kolkata locals who grew up in the lanes of this wonderful, chaotic, poetic city.
+        We started {site.name} because we kept meeting visitors who saw only the traffic — and missed the stories.
+      </p>
+      <p>
+        Whether it is the terracotta temples of Bishnupur, a boat drifting through the Sundarbans, or a plate of hot
+        kochuri at 7 AM in North Kolkata, we want you to experience Bengal the way we do.
+      </p>
+      <h2>What we promise</h2>
+      <ul>
+        <li>Small, friendly groups — or completely private tours</li>
+        <li>Honest prices agreed upfront</li>
+        <li>Safe, comfortable transport for every out-of-city trip</li>
+        <li>Flexible plans — we adapt to your pace</li>
+      </ul>
+    </div>
+  </section>
+</Base>
